@@ -1,0 +1,137 @@
+// 主题色
+$primary-color: #1A1A1A; // 主黑色
+$gold-color: #D4AF37; // 金属金
+$dark-gold: #B8860B; // 暗金色
+$secondary-color: #2D2D2D; // 次级背景色
+
+// 中性色
+$pure-black: #000000;
+$dark-gray: #333333;
+$medium-gray: #666666;
+$light-gray: #999999;
+
+// 功能色
+$success-color: #28A745; // 订餐成功色
+$warning-color: #FFC107; // 订单警告色
+$error-color: #DC3545; // 错误提示色
+$info-color: #17A2B8; // 信息提示色
+
+// 文字颜色
+$text-primary: #FFFFFF;
+$text-secondary: #CCCCCC;
+$text-gold: $gold-color;
+$text-dark-gold: $dark-gold;
+
+// 边框颜色
+$border-base: rgba(212, 175, 55, 0.3);
+$border-dark: rgba(0, 0, 0, 0.5);
+
+// 渐变配置
+$gold-gradient: linear-gradient(135deg, $gold-color 0%, $dark-gold 100%);
+
+// 阴影
+$shadow-base: 0 2px 8px rgba(0, 0, 0, 0.15);
+$shadow-gold: 0 2px 8px rgba(212, 175, 55, 0.3);
+
+// 字体定义
+$font-family: -apple-system, BlinkMacSystemFont, 
+  'Segoe UI', Roboto, 'Helvetica Neue', Arial, 
+  'Noto Sans', sans-serif; // 系统字体栈
+$font-size-base: 28rpx; // 基础字体大小
+$line-height-base: 1.6; // 基础行高
+
+// 文字层级
+$font-sizes: (
+  xl: 40rpx,  // 超大标题
+  lg: 34rpx,  // 大标题
+  md: 30rpx,  // 中等标题
+  base: 28rpx, // 正文
+  sm: 24rpx,  // 辅助文字
+  xs: 20rpx   // 备注文字
+);
+
+// 字体大小
+@each $key, $value in $font-sizes {
+  .fs-#{$key} { font-size: $value; }
+}
+@mixin font-size($key) {
+  font-size: map-get($font-sizes, $key);
+}
+
+// 间距系统
+$spacing-base: 16rpx;
+$spacing-sizes: (
+  0: 0,
+  1: $spacing-base * 0.5,  // 8rpx
+  2: $spacing-base,        // 16rpx
+  3: $spacing-base * 1.5,  // 24rpx
+  4: $spacing-base * 2,    // 32rpx
+  5: $spacing-base * 3     // 48rpx
+);
+// 间距
+@each $key, $value in $spacing-sizes {
+  .p-#{$key} { padding: $value; }
+  .m-#{$key} { margin: $value; }
+}
+@function spacing-size($key) {
+  @return map-get($spacing-sizes, $key);
+}
+// 圆角系统
+$radius-base: 16rpx;
+$radius-sizes: (
+  sm: 8rpx,
+  base: 16rpx,
+  lg: 32rpx,
+  circle: 50%
+);
+// 圆角
+@each $key, $value in $radius-sizes {
+  .radius-#{$key} { border-radius: $value; }
+}
+@mixin radius-size($key) {
+  radius-sizes: map-get($radius-sizes, $key);
+}
+
+// 混合模式
+@mixin gold-text-effect {
+  background: $gold-gradient;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+@mixin gold-border {
+  border: 1px solid $gold-color;
+  box-shadow: $shadow-gold;
+}
+
+// 实用类
+.text-gold {
+  color: $gold-color;
+}
+
+.bg-dark {
+  background-color: $primary-color;
+}
+
+.gold-divider {
+  height: 1px;
+  background: $gold-gradient;
+}
+
+
+
+// 卡片样式
+.card-container {
+  background: $secondary-color;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: $shadow-base;
+  border: 1px solid $border-base;
+}
+
+// 价格显示样式
+.price-tag {
+  @include gold-text-effect;
+  font-size: 24px;
+  font-weight: bold;
+}

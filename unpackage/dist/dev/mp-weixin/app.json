@@ -1,0 +1,45 @@
+{
+  "pages": [
+    "pages/home/index",
+    "pages/checkout/index",
+    "pages/menu/index",
+    "pages/order/index",
+    "pages/user/index"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#1A1A1A",
+    "backgroundColor": "#1A1A1A"
+  },
+  "tabBar": {
+    "color": "#1A1A1A",
+    "selectedColor": "#B8860B",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/home/index",
+        "text": "首页",
+        "iconPath": "static/iconfont/home.png",
+        "selectedIconPath": "static/iconfont/homefill.png"
+      },
+      {
+        "pagePath": "pages/menu/index",
+        "text": "点餐",
+        "iconPath": "static/iconfont/shopping.png",
+        "selectedIconPath": "static/iconfont/shoppingfill.png"
+      },
+      {
+        "pagePath": "pages/order/index",
+        "text": "订单",
+        "iconPath": "static/iconfont/order.png",
+        "selectedIconPath": "static/iconfont/orderfill.png"
+      },
+      {
+        "pagePath": "pages/user/index",
+        "text": "我的",
+        "iconPath": "static/iconfont/smile.png",
+        "selectedIconPath": "static/iconfont/smilefill.png"
+      }
+    ]
+  },
+  "usingComponents": {}
+}

@@ -1,0 +1,16 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "34452952",
+      "name": "time-task",
+      "font_class": "time-task",
+      "unicode": "e834",
+      "unicode_decimal": 59444
+    }
+  ]
+}

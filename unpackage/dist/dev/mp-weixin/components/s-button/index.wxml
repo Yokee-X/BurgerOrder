@@ -1,0 +1,1 @@
+<button class="{{[a, b, 'button', 'fs-base', 'radius-base', 'data-v-4da80e00']}}"><slot></slot></button>

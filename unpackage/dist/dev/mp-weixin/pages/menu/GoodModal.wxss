@@ -1,0 +1,14 @@
+/* 水平间距 */
+/* 水平间距 */
+.good.data-v-069111c6 {
+  height: 90vh;
+}
+.bottom.data-v-069111c6 {
+  position: fixed;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 10;
+  bottom: 0;
+  height: 160rpx;
+  background: #fff;
+}

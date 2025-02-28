@@ -1,0 +1,117 @@
+/* 水平间距 */
+/* 水平间距 */
+.fs-xl.data-v-c31dd96f {
+  font-size: 40rpx;
+}
+.fs-lg.data-v-c31dd96f {
+  font-size: 34rpx;
+}
+.fs-md.data-v-c31dd96f {
+  font-size: 30rpx;
+}
+.fs-base.data-v-c31dd96f {
+  font-size: 28rpx;
+}
+.fs-sm.data-v-c31dd96f {
+  font-size: 24rpx;
+}
+.fs-xs.data-v-c31dd96f {
+  font-size: 20rpx;
+}
+.p-0.data-v-c31dd96f {
+  padding: 0;
+}
+.m-0.data-v-c31dd96f {
+  margin: 0;
+}
+.p-1.data-v-c31dd96f {
+  padding: 8rpx;
+}
+.m-1.data-v-c31dd96f {
+  margin: 8rpx;
+}
+.p-2.data-v-c31dd96f {
+  padding: 16rpx;
+}
+.m-2.data-v-c31dd96f {
+  margin: 16rpx;
+}
+.p-3.data-v-c31dd96f {
+  padding: 24rpx;
+}
+.m-3.data-v-c31dd96f {
+  margin: 24rpx;
+}
+.p-4.data-v-c31dd96f {
+  padding: 32rpx;
+}
+.m-4.data-v-c31dd96f {
+  margin: 32rpx;
+}
+.p-5.data-v-c31dd96f {
+  padding: 48rpx;
+}
+.m-5.data-v-c31dd96f {
+  margin: 48rpx;
+}
+.radius-sm.data-v-c31dd96f {
+  border-radius: 8rpx;
+}
+.radius-base.data-v-c31dd96f {
+  border-radius: 16rpx;
+}
+.radius-lg.data-v-c31dd96f {
+  border-radius: 32rpx;
+}
+.radius-circle.data-v-c31dd96f {
+  border-radius: 50%;
+}
+.text-gold.data-v-c31dd96f {
+  color: #D4AF37;
+}
+.bg-dark.data-v-c31dd96f {
+  background-color: #1A1A1A;
+}
+.gold-divider.data-v-c31dd96f {
+  height: 1px;
+  background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
+}
+.card-container.data-v-c31dd96f {
+  background: #2D2D2D;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+}
+.price-tag.data-v-c31dd96f {
+  background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
+  -webkit-background-clip: text;
+  color: transparent;
+  font-size: 24px;
+  font-weight: bold;
+}
+.button.data-v-c31dd96f {
+  border: 1px solid #D4AF37;
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+  color: #D4AF37;
+  background: transparent;
+  transition: all 0.3s;
+  padding: 8rpx 32rpx;
+  line-height: 1.7;
+}
+.button.data-v-c31dd96f:hover {
+  opacity: 0.9;
+}
+.button-primary.data-v-c31dd96f {
+  background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
+  color: #FFFFFF;
+  border: none;
+}
+.button-primary.data-v-c31dd96f:hover {
+  opacity: 0.9;
+  box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+}
+.button-primary.data-v-c31dd96f:disabled {
+  background: #666666;
+  color: #CCCCCC;
+}

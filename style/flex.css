@@ -1,0 +1,104 @@
+ /* Flex 布局工具类 */
+.flex {
+    display: flex;
+}
+
+.inline-flex {
+    display: inline-flex;
+}
+
+ /* 主轴方向 */
+.row {
+    flex-direction: row;
+}
+.row-reverse {
+    flex-direction: row-reverse;
+}
+.column {
+    flex-direction: column;
+}
+.column-reverse {
+    flex-direction: column-reverse;
+}
+
+ /* 主轴对齐方式 */
+.justify-start {
+    justify-content: flex-start;
+}
+.justify-end {
+    justify-content: flex-end;
+}
+.justify-center {
+    justify-content: center;
+}
+.justify-between {
+    justify-content: space-between;
+}
+.justify-around {
+    justify-content: space-around;
+}
+.justify-evenly {
+    justify-content: space-evenly;
+}
+
+ /* 交叉轴对齐方式 */
+.items-start {
+    align-items: flex-start;
+}
+.items-end {
+    align-items: flex-end;
+}
+.items-center {
+    align-items: center;
+}
+.items-baseline {
+    align-items: baseline;
+}
+.items-stretch {
+    align-items: stretch;
+}
+
+ /* 多行排列方式 */
+.wrap {
+    flex-wrap: wrap;
+}
+.nowrap {
+    flex-wrap: nowrap;
+}
+.wrap-reverse {
+    flex-wrap: wrap-reverse;
+}
+
+/*  交叉轴对齐（多行） */
+.content-start {
+    align-content: flex-start;
+}
+.content-end {
+    align-content: flex-end;
+}
+.content-center {
+    align-content: center;
+}
+.content-between {
+    align-content: space-between;
+}
+.content-around {
+    align-content: space-around;
+}
+.content-stretch {
+    align-content: stretch;
+}
+
+ /* 子元素 Flex 占比 */
+.flex-1 {
+    flex: 1;
+}
+.flex-auto {
+    flex: auto;
+}
+.flex-initial {
+    flex: initial;
+}
+.flex-none {
+    flex: none;
+}

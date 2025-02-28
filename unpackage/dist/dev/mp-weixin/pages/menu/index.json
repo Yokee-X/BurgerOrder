@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "s-button": "../../components/s-button/s-button",
+    "good-modal": "./GoodModal"
+  }
+}

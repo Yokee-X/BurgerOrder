@@ -1,0 +1,119 @@
+/* 水平间距 */
+/* 水平间距 */
+.fs-xl.data-v-4978fed5 {
+  font-size: 40rpx;
+}
+.fs-lg.data-v-4978fed5 {
+  font-size: 34rpx;
+}
+.fs-md.data-v-4978fed5 {
+  font-size: 30rpx;
+}
+.fs-base.data-v-4978fed5 {
+  font-size: 28rpx;
+}
+.fs-sm.data-v-4978fed5 {
+  font-size: 24rpx;
+}
+.fs-xs.data-v-4978fed5 {
+  font-size: 20rpx;
+}
+.p-0.data-v-4978fed5 {
+  padding: 0;
+}
+.m-0.data-v-4978fed5 {
+  margin: 0;
+}
+.p-1.data-v-4978fed5 {
+  padding: 8rpx;
+}
+.m-1.data-v-4978fed5 {
+  margin: 8rpx;
+}
+.p-2.data-v-4978fed5 {
+  padding: 16rpx;
+}
+.m-2.data-v-4978fed5 {
+  margin: 16rpx;
+}
+.p-3.data-v-4978fed5 {
+  padding: 24rpx;
+}
+.m-3.data-v-4978fed5 {
+  margin: 24rpx;
+}
+.p-4.data-v-4978fed5 {
+  padding: 32rpx;
+}
+.m-4.data-v-4978fed5 {
+  margin: 32rpx;
+}
+.p-5.data-v-4978fed5 {
+  padding: 48rpx;
+}
+.m-5.data-v-4978fed5 {
+  margin: 48rpx;
+}
+.radius-sm.data-v-4978fed5 {
+  border-radius: 8rpx;
+}
+.radius-base.data-v-4978fed5 {
+  border-radius: 16rpx;
+}
+.radius-lg.data-v-4978fed5 {
+  border-radius: 32rpx;
+}
+.radius-circle.data-v-4978fed5 {
+  border-radius: 50%;
+}
+.text-gold.data-v-4978fed5 {
+  color: #D4AF37;
+}
+.bg-dark.data-v-4978fed5 {
+  background-color: #1A1A1A;
+}
+.gold-divider.data-v-4978fed5 {
+  height: 1px;
+  background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
+}
+.card-container.data-v-4978fed5 {
+  background: #2D2D2D;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+}
+.price-tag.data-v-4978fed5 {
+  background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);
+  -webkit-background-clip: text;
+  color: transparent;
+  font-size: 24px;
+  font-weight: bold;
+}
+.poster.data-v-4978fed5 {
+  width: 100vw;
+  height: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+.button-container.data-v-4978fed5 {
+  position: absolute;
+  bottom: 25%;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+.button-container .button-text.data-v-4978fed5 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.button-container .button-text-main.data-v-4978fed5 {
+  font-size: 30rpx;
+}
+.button-container .button-text-sub.data-v-4978fed5 {
+  font-size: 24rpx;
+}
