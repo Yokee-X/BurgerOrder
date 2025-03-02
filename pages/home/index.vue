@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<image class="poster" mode="widthFix" src="/static/home/poster3.png"></image>
+		<image class="poster" mode="widthFix" src="/static/poster/poster3.png"></image>
 		<view class="button-container">
 			<s-button @tap="jump(0)">
 				<view class="button-text">
@@ -24,7 +24,7 @@
 		computed
 	} from 'vue'
 	const jump=(p)=>{
-		uni.navigateTo({
+		uni.switchTab({
 			url:'/pages/menu/index?takeout='+p
 		})
 	}
@@ -32,7 +32,6 @@
 
 <style scoped lang="scss">
 	@import '../../style/common.scss';
-
 	.poster {
 		width: 100vw;
 		height: auto;
@@ -44,7 +43,7 @@
 
 	.button-container {
 		position: absolute;
-		bottom: 25%;
+		bottom: 200rpx;
 		width: 100%;
 		display: flex;
 		justify-content: space-around;

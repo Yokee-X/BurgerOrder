@@ -6,15 +6,14 @@ if (!Array) {
 }
 const _easycom_s_button = () => "../../components/s-button/s-button.js";
 if (!Math) {
-  (_easycom_s_button + GoodModal)();
+  (_easycom_s_button + common_vendor.unref(goodModal))();
 }
-const GoodModal = () => "./GoodModal.js";
 const _sfc_main = {
   __name: "index",
   setup(__props) {
     const category = common_vendor.ref([]);
     const currentCategory = common_vendor.ref(0);
-    const goodModal = common_vendor.ref(null);
+    const goodModal2 = common_vendor.ref(null);
     const goodModalItem = common_vendor.ref(null);
     const scrollStop = common_vendor.ref(false);
     common_vendor.onLoad(() => {
@@ -29,10 +28,11 @@ const _sfc_main = {
       goodModalItem.value = good;
       common_vendor.nextTick$1(() => {
         var _a;
-        (_a = goodModal.value) == null ? void 0 : _a.open();
+        (_a = goodModal2.value) == null ? void 0 : _a.open();
       });
     };
     const get = (visible) => {
+      common_vendor.index.__f__("log", "at pages/menu/index.vue:87", visible, "visible");
       scrollStop.value = visible;
     };
     return (_ctx, _cache) => {
@@ -63,7 +63,7 @@ const _sfc_main = {
             c: index
           };
         }),
-        d: common_vendor.sr(goodModal, "1f245baa-1", {
+        d: common_vendor.sr(goodModal2, "1f245baa-1", {
           "k": "goodModal"
         }),
         e: common_vendor.o(get),

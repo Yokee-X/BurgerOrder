@@ -100,7 +100,7 @@
 }
 .button-container.data-v-4978fed5 {
   position: absolute;
-  bottom: 25%;
+  bottom: 200rpx;
   width: 100%;
   display: flex;
   justify-content: space-around;

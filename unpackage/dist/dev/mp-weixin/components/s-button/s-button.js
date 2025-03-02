@@ -13,7 +13,6 @@ const _sfc_main = {
     }
   },
   setup(__props) {
-    common_vendor.useAttrs();
     const props = __props;
     return (_ctx, _cache) => {
       return {

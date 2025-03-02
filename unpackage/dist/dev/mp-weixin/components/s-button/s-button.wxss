@@ -98,6 +98,7 @@
   transition: all 0.3s;
   padding: 8rpx 32rpx;
   line-height: 1.7;
+  box-sizing: border-box;
 }
 .button-primary {
   background: linear-gradient(135deg, #D4AF37 0%, #B8860B 100%);

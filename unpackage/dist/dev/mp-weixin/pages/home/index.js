@@ -13,7 +13,7 @@ const _sfc_main = {
   __name: "index",
   setup(__props) {
     const jump = (p) => {
-      common_vendor.index.navigateTo({
+      common_vendor.index.switchTab({
         url: "/pages/menu/index?takeout=" + p
       });
     };

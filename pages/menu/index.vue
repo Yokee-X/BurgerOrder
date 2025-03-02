@@ -48,6 +48,7 @@
 			</view>
 
 		</view>
+		<!-- 商品选择弹窗 -->
 		<good-modal ref="goodModal" @change="get" :good="goodModalItem" ></good-modal>
 	</view>
 </template>
@@ -61,12 +62,12 @@
 	import {
 		onLoad
 	} from '@dcloudio/uni-app'
-	import GoodModal from './GoodModal.vue';
 	const category = ref([]) //商品类目
 	const currentCategory = ref(0) //当前选中的类目
 	const goodModal = ref(null) //选择规格弹窗
 	const goodModalItem = ref(null) //选择规格弹窗
 	const scrollStop = ref(false)//控制滚动穿透
+	
 	onLoad(() => {
 		//获取数据
 		import('/api/categorys.json').then(res => {
@@ -83,6 +84,7 @@
 		  });
 	}
 	const get=(visible)=>{
+		console.log(visible,'visible')
 		scrollStop.value=visible
 	}
 	// import { ref, computed } from 'vue'
@@ -113,7 +115,7 @@
 
 <style lang="scss" scoped>
 	@import '../../style/common.scss';
-	@import '/static/iconfont/iconfont.css';
+	@import '../../style/iconfont.css';
 
 	.menu-page {
 		display: flex;

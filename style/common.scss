@@ -89,7 +89,7 @@ $radius-sizes: (
   .radius-#{$key} { border-radius: $value; }
 }
 @mixin radius-size($key) {
-  radius-sizes: map-get($radius-sizes, $key);
+  border-radius: map-get($radius-sizes, $key);
 }
 
 // 混合模式
