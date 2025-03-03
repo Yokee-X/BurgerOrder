@@ -9,7 +9,6 @@ export const useCartStore = defineStore('cart', () => {
 	const updateCart = (cb) =>{
 		cart.value = cb(cart.value)
 	}
-	console.log(cart.value,'cart')
 	return {
 		cart,
 		updateCart

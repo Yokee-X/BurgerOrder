@@ -1,30 +1,28 @@
 <template>
-	<uni-popup ref="goodModal" type="bottom" border-radius="10px 10px 0 0" background-color="#fff"
-		@change="modalChange">
-		<view>
-			<scroll-view scroll-y>
-				<view class="flex column good items-center">
-					<view class="good-img p-2">
-						<image :src="props.good?.image" mode="aspectFit" style="width: 100%;
+	<Popup v-model:visible="visible" direction="bottom" @change="modalChange">
+		<view class="container">
+			<view class="iconfont icon-close close p-1 radius-circle"></view>
+			<view class="flex column good items-center">
+				<view class="good-img p-2">
+					<image :src="props.good?.image" mode="aspectFit" style="width: 100%;
 						"></image>
-					</view>
-					<view class="good-main flex justify-between items-center">
-						<text class="good-label  fs-md">{{props.good?.label}}</text>
-						<text class="good-sell fs-sm">月售{{props.good?.sell}}</text>
-					</view>
-					<view class="add flex column">
-						<text class="add-title fs-sm">来点小料</text>
-						<view v-for="(ingredient,key) in ingredientList" :key="key"
-							class="add-item flex justify-between items-center">
-							<text class="add-item-label">{{ingredient.label}}</text>
-							<text class="add-item-price">￥{{ingredient.price}}</text>
-							<AddSubtractButton @reduce="(total)=>updateAddMap(ingredient,total)"
-								@add="(total)=>updateAddMap(ingredient,total)"></AddSubtractButton>
-						</view>
+				</view>
+				<view class="good-main flex justify-between items-center">
+					<text class="good-label  fs-md">{{props.good?.label}}</text>
+					<text class="good-sell fs-sm">月售{{props.good?.sell}}</text>
+				</view>
+				<view class="add flex column">
+					<text class="add-title fs-sm">来点小料</text>
+					<view v-for="(ingredient,key) in ingredientList" :key="key"
+						class="add-item flex justify-between items-center">
+						<text class="add-item-label">{{ingredient.label}}</text>
+						<text class="add-item-price">￥{{ingredient.price}}</text>
+						<AddSubtractButton @reduce="(total)=>updateAddMap(ingredient,total)"
+							@add="(total)=>updateAddMap(ingredient,total)"></AddSubtractButton>
 					</view>
 				</view>
-			</scroll-view>
-			<view class="flex justify-between bottom-add p-1">
+			</view>
+			<view class="flex justify-between bottom-add p-1" v-show="addListTitleShow">
 				<text class="fs-sm">已选：{{addListTitle}}</text>
 			</view>
 			<view class="bottom flex justify-between column">
@@ -36,19 +34,22 @@
 					</AddSubtractButton>
 				</view>
 				<view class="flex justify-between   m-2">
-					<s-button @tap="buyNow" class="bottom-btn">立即购买</s-button>
-					<s-button @tap="addCart" class="bottom-btn" primary>加入购物车</s-button>
+					<SButton @tap="buyNow" class="bottom-btn">立即购买</SButton>
+					<SButton @tap="addCart" class="bottom-btn" primary>加入购物车</SButton>
 				</view>
 			</view>
 
 		</view>
-	</uni-popup>
+	</Popup>
 </template>
 
 <script setup>
+	// import Popup1 from '../../components/Popup/Popup1.vue';
 	import {
 		computed,
-		onMounted,
+		nextTick,
+		onUnmounted,
+		onUpdated,
 		ref
 	} from 'vue';
 	import {
@@ -67,6 +68,7 @@
 	const {
 		updateCart
 	} = store
+	const visible = ref(false)
 	const props = defineProps({
 		good: {
 			type: Object, //当前选择的商品
@@ -87,9 +89,15 @@
 			})
 		})
 	})
-	const goodModal = ref(null)
+	const addListTitleShow = computed(() => {
+		const show = Object.keys(addMap.value).length != 0 || Object.keys(addMap.value).some(id => addMap.value?.[
+			id
+		] !== 0)
+		console.log(Object.keys(addMap.value).length, 'show')
+		return show
+	})
 	//加料展示标题
-	const addListTitle = computed((oldVal) => {
+	const addListTitle = computed(() => {
 		const title = []
 		Object.keys(addMap.value).forEach((id) => {
 			if (addMap.value[id]) title.push(ingredientMap.value[id].label + 'x ' + addMap.value[id])
@@ -97,18 +105,17 @@
 		return title.join('、')
 	})
 	//总价格
-	const totalPrice = computed((oldVal) => {
+	const totalPrice = computed(() => {
 		const ingredientPrice = Object.keys(addMap.value).reduce((pre, id) => {
 			pre = pre + ingredientMap.value[id].price * addMap.value[id]
 			return pre
 		}, 0)
 		const goodPirce = goodTotal.value * (props.good?.price || 0)
-		console.log(goodTotal, goodPirce, 'goodPirce')
 		return ingredientPrice + goodPirce
 	})
-	const buyNow = () => {
-		//跳转购买页面
-	}
+	//跳转购买页面
+	const buyNow = () => {}
+	//加入购物车
 	const addCart = () => {
 		const ingredient = []
 		Object.keys(addMap.value).forEach((id) => {
@@ -122,7 +129,7 @@
 			ingredient
 		}
 		updateCart((value) => [...value, obj])
-		goodModal.value?.close()
+		visible.value = false
 	}
 
 	//加减小料
@@ -134,31 +141,46 @@
 		goodTotal.value = total
 	}
 	//暴露modal方法
-	const open = (direction) => {
-		goodModal.value?.open(direction); // 通过ref调用组件内的方法
+	const open = () => {
+		console.log('调用open')
+		visible.value = true
 	};
 	defineExpose({
 		open
 	})
 	//modal change
 	const $emit = defineEmits(['change'])
-	const modalChange = ({
-		show
-	}) => {
+	const modalChange = (visible) => {
+		console.log(visible, 'show')
 		addMap.value = {}
 		goodTotal.value = 1
-		$emit('change', show)
+		$emit('change', visible)
 	}
 </script>
 
 <style scoped lang="scss">
 	@import '../../style/common.scss';
 
-	.good {
+	.container {
 		position: relative;
 		height: 90vh;
-		overflow-y: auto;
 		box-sizing: border-box;
+		border-radius: 10px 10px 0 0;
+		background: #fff;
+	}
+
+	.close {
+		position: absolute;
+		right: 30rpx;
+		top: 30rpx;
+		background: rgba(0, 0, 0, 0.1);
+		color: #fff;
+
+	}
+
+	.good {
+		position: relative;
+		overflow-y: auto;
 		padding-bottom: 160rpx;
 
 		&-img {

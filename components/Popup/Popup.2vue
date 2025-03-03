@@ -1,0 +1,153 @@
+<!-- components/custom-popup.vue -->
+<template>
+	<!-- 遮罩层 -->
+	<view v-if="showMask" class="mask" @tap="handleMaskClick">
+		<!-- 使用 uni-transition 实现动画 -->
+		<uni-transition ref="transitionRef" :mode-class="modeClass" :show="innerVisible" :duration="duration"
+			@change="onTransitionChange">
+			<!-- 弹窗内容 -->
+			<view class="popup-content" :class="[customClass]" @tap.stop>
+				<slot></slot>
+				<!-- <view class="close-btn" @tap="close">×</view> -->
+			</view>
+		</uni-transition>
+	</view>
+</template>
+
+<script setup>
+	import {
+		ref,
+		watch,
+		computed
+	} from 'vue'
+
+	const props = defineProps({
+		visible: Boolean,
+		animationType: {
+			type: String,
+			default: 'slide-bottom'
+		}, // 动画类型
+		duration: {
+			type: Number,
+			default: 300
+		}, // 动画时长
+		maskClosable: {
+			type: Boolean,
+			default: true
+		}, // 点击遮罩关闭
+		customClass: String // 自定义样式
+	})
+
+	const emit = defineEmits(['update:visible', 'close', 'open', 'change'])
+
+	const innerVisible = ref(false)
+	const showMask = ref(false)
+	const transitionRef = ref(null)
+
+	// 根据动画类型生成对应的动画类
+	const modeClass = computed(() => {
+		const types = {
+			'slide-bottom': ['slide-bottom'],
+			'slide-top': ['slide-top'],
+			'slide-left': ['slide-left'],
+			'slide-right': ['slide-right'],
+			'zoom': ['zoom-in', 'zoom-out']
+		}
+		return types[props.animationType] || ['slide-bottom']
+	})
+
+	// 监听visible变化
+	watch(() => props.visible, (val) => {
+		emit('change', val)
+		if (val) {
+			showMask.value = true
+			setTimeout(() => {
+				innerVisible.value = true
+				emit('open')
+			}, 50)
+		} else {
+			innerVisible.value = false
+		}
+	})
+
+	// 动画结束回调
+	const onTransitionChange = (e) => {
+		if (e.detail.show === false) {
+			showMask.value = false
+		}
+	}
+
+	const close = () => {
+		emit('update:visible', false)
+		emit('close')
+	}
+
+	const handleMaskClick = () => {
+		if (props.maskClosable) close()
+	}
+</script>
+
+<style lang="scss">
+	::v-deep(.mask) {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: rgba(0, 0, 0, 0.5);
+		display: flex;
+		// justify-content: center;
+		align-items: flex-end;
+		z-index: 99;
+		.popup-content {
+			background: #fff;
+			width: 100%;
+			// border-radius: 16rpx;
+			// width: 640rpx;
+			// padding: 30rpx;
+			position: relative;
+		}
+		
+		.close-btn {
+			position: absolute;
+			right: 20rpx;
+			top: 20rpx;
+			font-size: 40rpx;
+		}
+		
+		/* 自定义动画样式 */
+		.slide-bottom-enter,
+		.slide-bottom-leave-to {
+			transform: translateY(100%);
+		}
+		
+		.slide-top-enter,
+		.slide-top-leave-to {
+			transform: translateY(-100%);
+		}
+		
+		.slide-left-enter,
+		.slide-left-leave-to {
+			transform: translateX(-100%);
+		}
+		
+		.slide-right-enter,
+		.slide-right-leave-to {
+			transform: translateX(100%);
+		}
+		
+		.zoom-in-enter {
+			transform: scale(0);
+		}
+		
+		.zoom-in-enter-active {
+			transform: scale(1);
+		}
+		
+		.zoom-out-leave-active {
+			transform: scale(0);
+		}
+	}
+
+	
+</style>

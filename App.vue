@@ -6,7 +6,7 @@
 	@import '@/uni_modules/uni-scss/index.scss';
 	@import 'style/common.scss';
 	@import 'style/flex.css';
-
+	@import 'style/iconfont.css';
 	// 设置整个项目的背景色
 	page {
 		background-color: #fff;

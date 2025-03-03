@@ -3,18 +3,18 @@ const common_vendor = require("../../common/vendor.js");
 const stores_cart = require("../../stores/cart.js");
 if (!Array) {
   const _easycom_AddSubtractButton2 = common_vendor.resolveComponent("AddSubtractButton");
-  const _easycom_s_button2 = common_vendor.resolveComponent("s-button");
-  const _easycom_uni_popup2 = common_vendor.resolveComponent("uni-popup");
-  (_easycom_AddSubtractButton2 + _easycom_s_button2 + _easycom_uni_popup2)();
+  const _easycom_SButton2 = common_vendor.resolveComponent("SButton");
+  const _easycom_Popup2 = common_vendor.resolveComponent("Popup");
+  (_easycom_AddSubtractButton2 + _easycom_SButton2 + _easycom_Popup2)();
 }
 const _easycom_AddSubtractButton = () => "../../components/AddSubtractButton/AddSubtractButton.js";
-const _easycom_s_button = () => "../../components/s-button/s-button.js";
-const _easycom_uni_popup = () => "../../uni_modules/uni-popup/components/uni-popup/uni-popup.js";
+const _easycom_SButton = () => "../../components/SButton/SButton.js";
+const _easycom_Popup = () => "../../components/Popup/Popup.js";
 if (!Math) {
-  (_easycom_AddSubtractButton + _easycom_s_button + _easycom_uni_popup)();
+  (_easycom_AddSubtractButton + _easycom_SButton + _easycom_Popup)();
 }
 const _sfc_main = {
-  __name: "GoodModal",
+  __name: "goodModal",
   props: {
     good: {
       type: Object,
@@ -29,6 +29,7 @@ const _sfc_main = {
     const {
       updateCart
     } = store;
+    const visible = common_vendor.ref(false);
     const props = __props;
     const ingredientList = common_vendor.ref([]);
     const ingredientMap = common_vendor.ref({});
@@ -42,8 +43,15 @@ const _sfc_main = {
         });
       });
     });
-    const goodModal = common_vendor.ref(null);
-    const addListTitle = common_vendor.computed((oldVal) => {
+    const addListTitleShow = common_vendor.computed(() => {
+      const show = Object.keys(addMap.value).length != 0 || Object.keys(addMap.value).some((id) => {
+        var _a;
+        return ((_a = addMap.value) == null ? void 0 : _a[id]) !== 0;
+      });
+      common_vendor.index.__f__("log", "at pages/menu/goodModal.vue:96", Object.keys(addMap.value).length, "show");
+      return show;
+    });
+    const addListTitle = common_vendor.computed(() => {
       const title = [];
       Object.keys(addMap.value).forEach((id) => {
         if (addMap.value[id])
@@ -51,20 +59,18 @@ const _sfc_main = {
       });
       return title.join("、");
     });
-    const totalPrice = common_vendor.computed((oldVal) => {
+    const totalPrice = common_vendor.computed(() => {
       var _a;
       const ingredientPrice = Object.keys(addMap.value).reduce((pre, id) => {
         pre = pre + ingredientMap.value[id].price * addMap.value[id];
         return pre;
       }, 0);
       const goodPirce = goodTotal.value * (((_a = props.good) == null ? void 0 : _a.price) || 0);
-      common_vendor.index.__f__("log", "at pages/menu/GoodModal.vue:106", goodTotal, goodPirce, "goodPirce");
       return ingredientPrice + goodPirce;
     });
     const buyNow = () => {
     };
     const addCart = () => {
-      var _a;
       const ingredient = [];
       Object.keys(addMap.value).forEach((id) => {
         if (addMap.value[id])
@@ -78,7 +84,7 @@ const _sfc_main = {
         ingredient
       };
       updateCart((value) => [...value, obj]);
-      (_a = goodModal.value) == null ? void 0 : _a.close();
+      visible.value = false;
     };
     const updateAddMap = (ingredient, total) => {
       addMap.value[ingredient.id] = total;
@@ -86,20 +92,19 @@ const _sfc_main = {
     const updateGoodTotal = (total) => {
       goodTotal.value = total;
     };
-    const open = (direction) => {
-      var _a;
-      (_a = goodModal.value) == null ? void 0 : _a.open(direction);
+    const open = () => {
+      common_vendor.index.__f__("log", "at pages/menu/goodModal.vue:145", "调用open");
+      visible.value = true;
     };
     __expose({
       open
     });
     const $emit = __emit;
-    const modalChange = ({
-      show
-    }) => {
+    const modalChange = (visible2) => {
+      common_vendor.index.__f__("log", "at pages/menu/goodModal.vue:154", visible2, "show");
       addMap.value = {};
       goodTotal.value = 1;
-      $emit("change", show);
+      $emit("change", visible2);
     };
     return (_ctx, _cache) => {
       var _a, _b, _c;
@@ -113,36 +118,34 @@ const _sfc_main = {
             b: common_vendor.t(ingredient.price),
             c: common_vendor.o((total) => updateAddMap(ingredient, total), key),
             d: common_vendor.o((total) => updateAddMap(ingredient, total), key),
-            e: "069111c6-1-" + i0 + ",069111c6-0",
+            e: "7f868348-1-" + i0 + ",7f868348-0",
             f: key
           };
         }),
         e: common_vendor.t(addListTitle.value),
-        f: common_vendor.t(totalPrice.value),
-        g: common_vendor.o(updateGoodTotal),
+        f: addListTitleShow.value,
+        g: common_vendor.t(totalPrice.value),
         h: common_vendor.o(updateGoodTotal),
-        i: common_vendor.p({
+        i: common_vendor.o(updateGoodTotal),
+        j: common_vendor.p({
           init: 1,
           minNumber: 1
         }),
-        j: common_vendor.o(buyNow),
-        k: common_vendor.o(addCart),
-        l: common_vendor.p({
+        k: common_vendor.o(buyNow),
+        l: common_vendor.o(addCart),
+        m: common_vendor.p({
           primary: true
         }),
-        m: common_vendor.sr(goodModal, "069111c6-0", {
-          "k": "goodModal"
-        }),
         n: common_vendor.o(modalChange),
-        o: common_vendor.p({
-          type: "bottom",
-          ["border-radius"]: "10px 10px 0 0",
-          ["background-color"]: "#fff"
+        o: common_vendor.o(($event) => visible.value = $event),
+        p: common_vendor.p({
+          direction: "bottom",
+          visible: visible.value
         })
       };
     };
   }
 };
-const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-069111c6"]]);
+const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__scopeId", "data-v-7f868348"]]);
 wx.createComponent(Component);
-//# sourceMappingURL=../../../.sourcemap/mp-weixin/pages/menu/GoodModal.js.map
+//# sourceMappingURL=../../../.sourcemap/mp-weixin/pages/menu/goodModal.js.map

@@ -2,18 +2,18 @@
 	<view>
 		<image class="poster" mode="widthFix" src="/static/poster/poster3.png"></image>
 		<view class="button-container">
-			<s-button @tap="jump(0)">
+			<SButton @tap="jump(0)">
 				<view class="button-text">
 					<text class="button-text-main">店内堂食</text>
 					<text class="button-text-sub">EAT-IN</text>
 				</view>
-			</s-button>
-			<s-button @tap="jump(1)">
+			</SButton>
+			<SButton @tap="jump(1)">
 				<view class="button-text">
 					<text class="button-text-main">打包外带</text>
 					<text class="button-text-sub">TAKE-OUT</text>
 				</view>
-			</s-button>
+			</SButton>
 		</view>
 	</view>
 </template>
@@ -24,8 +24,11 @@
 		computed
 	} from 'vue'
 	const jump=(p)=>{
-		uni.switchTab({
-			url:'/pages/menu/index?takeout='+p
+		// uni.switchTab({
+		// 	url:'/pages/menu/index?takeout='+p
+		// })
+		uni.navigateTo({
+			url:'/pages/menu/test'
 		})
 	}
 </script>

@@ -5,7 +5,6 @@ const useCartStore = common_vendor.defineStore("cart", () => {
   const updateCart = (cb) => {
     cart.value = cb(cart.value);
   };
-  common_vendor.index.__f__("log", "at stores/cart.js:12", cart.value, "cart");
   return {
     cart,
     updateCart

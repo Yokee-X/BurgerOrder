@@ -1,6 +1,7 @@
 <template>
 		<page-meta :page-style="'overflow:'+(scrollStop?'hidden':'visible')"></page-meta>
 	<view class="menu-page">
+		
 		<view class="bg-dark"></view>
 		<view class="main-info p-3 flex column justify-around">
 			<text class="main-info-logo">SAP Burger</text>
@@ -38,7 +39,7 @@
 										<text class="good-pirce fs-sm"><text class="fs-sm"
 												style="font-weight: 600;">￥<text
 													class="fs-md">{{good.price}}</text></text>/份</text>
-										<s-button @tap="pickGood(good)">选规格</s-button>
+										<SButton @tap="pickGood(good)">选规格</SButton>
 									</view>
 								</view>
 							</view>
@@ -49,7 +50,8 @@
 
 		</view>
 		<!-- 商品选择弹窗 -->
-		<good-modal ref="goodModal" @change="get" :good="goodModalItem" ></good-modal>
+		<good-modal ref="goodModalRef" @change="get" :good="goodModalItem" ></good-modal>
+		<!-- <cart></cart> -->
 	</view>
 </template>
 <script setup>
@@ -58,13 +60,14 @@
 		onUpdated,
 		ref,
 	} from 'vue';
-	// import sButton from '../../components/s-button/index.vue';
 	import {
 		onLoad
 	} from '@dcloudio/uni-app'
+	import goodModal from './goodModal.vue'
+	import cart from './cart.vue';
 	const category = ref([]) //商品类目
 	const currentCategory = ref(0) //当前选中的类目
-	const goodModal = ref(null) //选择规格弹窗
+	const goodModalRef = ref(null) //选择规格弹窗
 	const goodModalItem = ref(null) //选择规格弹窗
 	const scrollStop = ref(false)//控制滚动穿透
 	
@@ -79,38 +82,14 @@
 	}
 	const pickGood = (good) => {
 		goodModalItem.value = good
-		nextTick(() => {
-		    goodModal.value?.open();
-		  });
+	 	nextTick(()=>{
+		    goodModalRef.value?.open();
+	 })
 	}
 	const get=(visible)=>{
-		console.log(visible,'visible')
+		console.log('父级get',visible)
 		scrollStop.value=visible
 	}
-	// import { ref, computed } from 'vue'
-	// import { useCartStore } from '@/stores/cart'
-
-	// const cartStore = useCartStore()
-	// const searchKey = ref('')
-	// const activeCategory = ref(0)
-	// const showCartPanel = ref(false)
-
-	// // 获取数据逻辑...
-
-	// const addToCart = (product) => {
-	//   cartStore.addItem({
-	//     id: product.id,
-	//     name: product.name,
-	//     price: product.price,
-	//     image: product.cover,
-	//     specs: product.specs[0] // 默认规格
-	//   })
-	// }
-
-	// const handleCheckout = () => {
-	//   uni.navigateTo({ url: '/pages/checkout/index' })
-	//   showCartPanel.value = false
-	// }
 </script>
 
 <style lang="scss" scoped>

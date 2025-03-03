@@ -1,6 +1,6 @@
 {
   "navigationStyle": "custom",
   "usingComponents": {
-    "s-button": "../../components/s-button/s-button"
+    "s-button": "../../components/SButton/SButton"
   }
 }

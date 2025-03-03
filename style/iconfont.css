@@ -1,6 +1,6 @@
 @font-face {
   font-family: "iconfont"; /* Project id  */
-  src: url('iconfont.ttf?t=1740915248122') format('truetype');
+  src: url('iconfont.ttf?t=1740970744488') format('truetype');
 }
 
 .iconfont {
@@ -11,12 +11,20 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-mbefengge_hanbao:before {
+  content: "\e616";
+}
+
 .icon-time-task:before {
   content: "\e835";
 }
 
 .icon-add:before {
   content: "\e836";
+}
+
+.icon-close:before {
+  content: "\e839";
 }
 
 .icon-reduce:before {
