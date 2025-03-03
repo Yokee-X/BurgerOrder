@@ -1,16 +1,21 @@
 <template>
-	<button style="width: 100%;height: 100rpx;" @tap="show">出现弹窗</button>
-	<popup ref="popRef" :test="test"></popup>
+	<view>
+		<SButton @tap="show(123)">选规格</SButton>
+		<popup ref="goodModalRef" @change="get" :test="test"></popup>
+	</view>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import popup from './popup.vue'
-	const popRef = ref(null)
+	const goodModalRef = ref(null)
 	const test = ref(null)
-	const show=()=>{
-		test.value=123
-		popRef.value.open()
+	const show=(value)=>{
+		test.value=value
+		goodModalRef.value.open()
+	}
+	const get=(visible)=>{
+		console.log('父级get',visible)
 	}
 </script>
 

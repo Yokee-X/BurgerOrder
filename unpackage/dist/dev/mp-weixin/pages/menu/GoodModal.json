@@ -1,8 +1,6 @@
 {
   "component": true,
   "usingComponents": {
-    "add-subtract-button": "../../components/AddSubtractButton/AddSubtractButton",
-    "s-button": "../../components/SButton/SButton",
-    "popup": "../../components/Popup/Popup"
+    "uni-popup": "../../uni_modules/uni-popup/components/uni-popup/uni-popup"
   }
 }

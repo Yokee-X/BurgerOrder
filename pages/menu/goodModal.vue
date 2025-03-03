@@ -1,11 +1,10 @@
 <template>
-	<Popup v-model:visible="visible" direction="bottom" @change="modalChange">
-		<view class="container">
+	<uni-popup ref="popupRef" type="bottom" @change="modalChange">
+		<view class="container" >
 			<view class="iconfont icon-close close p-1 radius-circle"></view>
-			<view class="flex column good items-center">
+			<!-- <scroll-view class="flex column good items-center">
 				<view class="good-img p-2">
-					<image :src="props.good?.image" mode="aspectFit" style="width: 100%;
-						"></image>
+					<image :src="props.good?.image" mode="aspectFit" style="width: 100%"></image>
 				</view>
 				<view class="good-main flex justify-between items-center">
 					<text class="good-label  fs-md">{{props.good?.label}}</text>
@@ -21,26 +20,26 @@
 							@add="(total)=>updateAddMap(ingredient,total)"></AddSubtractButton>
 					</view>
 				</view>
-			</view>
-			<view class="flex justify-between bottom-add p-1" v-show="addListTitleShow">
+			</scroll-view> -->
+			<!-- <view class="flex justify-between bottom-add p-1" v-show="addListTitleShow">
 				<text class="fs-sm">已选：{{addListTitle}}</text>
 			</view>
-			<view class="bottom flex justify-between column">
+			<view class="bottom flex justify-between column m-2">
 
-				<view class="flex justify-between bottom-total  m-2">
+				<view class="flex justify-between bottom-total">
 					<text class="bottom-total-title fs-md">￥<text
 							class="bottom-total-price fs-xl">{{totalPrice}}</text>/个</text>
 					<AddSubtractButton @reduce="updateGoodTotal" @add="updateGoodTotal" :init="1" :minNumber="1">
 					</AddSubtractButton>
 				</view>
-				<view class="flex justify-between   m-2">
+				<view class="flex justify-between ">
 					<SButton @tap="buyNow" class="bottom-btn">立即购买</SButton>
 					<SButton @tap="addCart" class="bottom-btn" primary>加入购物车</SButton>
 				</view>
-			</view>
+			</view> -->
 
 		</view>
-	</Popup>
+	</uni-popup>
 </template>
 
 <script setup>
@@ -48,6 +47,7 @@
 	import {
 		computed,
 		nextTick,
+		onMounted,
 		onUnmounted,
 		onUpdated,
 		ref
@@ -61,33 +61,42 @@
 	import {
 		storeToRefs
 	} from 'pinia'
-	const store = useCartStore() //购物车store
-	const {
-		cart
-	} = storeToRefs(store)
-	const {
-		updateCart
-	} = store
-	const visible = ref(false)
+
 	const props = defineProps({
 		good: {
 			type: Object, //当前选择的商品
 			default: () => ({})
 		}
 	})
+	const store = useCartStore() //购物车store
+		const {
+			cart
+		} = storeToRefs(store)
+		const {
+			updateCart
+		} = store
+	const popupRef = ref(null) //BUG:ref要在props后定义
+	const visible = ref(false) //
+
 	const ingredientList = ref([]) //小料列表数据
 	const ingredientMap = ref({}) //小料列表映射
 	const addMap = ref({}) //加料列表数据
 	const goodTotal = ref(1) //商品个数
-	onLoad(() => {
-		//获取数据
-		import('/api/add.json').then(res => {
-			ingredientList.value = res.default
-			res.default.forEach((item) => {
-				ingredientMap
-					.value[item.id] = item
-			})
-		})
+	// onLoad(() => {
+	// 	//获取数据
+	// 	import('/api/add.json').then(res => {
+	// 		ingredientList.value = res.default
+	// 		res.default.forEach((item) => {
+	// 			ingredientMap
+	// 				.value[item.id] = item
+	// 		})
+	// 	})
+	// })
+	onMounted(()=>{
+		console.log('mounted',visible.value,popupRef.value)
+	})
+	onUpdated(()=>{
+		console.log('update',visible.value,popupRef.value)
 	})
 	const addListTitleShow = computed(() => {
 		const show = Object.keys(addMap.value).length != 0 || Object.keys(addMap.value).some(id => addMap.value?.[
@@ -129,7 +138,7 @@
 			ingredient
 		}
 		updateCart((value) => [...value, obj])
-		visible.value = false
+		popupRef.value?.close()
 	}
 
 	//加减小料
@@ -142,19 +151,22 @@
 	}
 	//暴露modal方法
 	const open = () => {
-		console.log('调用open')
-		visible.value = true
+		console.log('调用open', popupRef.value)
+		if(popupRef.value){
+			visible.value = true
+			popupRef.value?.open()
+		}
 	};
 	defineExpose({
 		open
 	})
 	//modal change
 	const $emit = defineEmits(['change'])
-	const modalChange = (visible) => {
-		console.log(visible, 'show')
+	const modalChange = ({show}) => {
 		addMap.value = {}
 		goodTotal.value = 1
-		$emit('change', visible)
+		visible.value = show
+		$emit('change', show)
 	}
 </script>
 
