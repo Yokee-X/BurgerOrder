@@ -1,7 +1,6 @@
 <template>
-		<page-meta :page-style="'overflow:'+(scrollStop?'hidden':'visible')"></page-meta>
+	<page-meta :page-style="'overflow:'+(scrollStop?'hidden':'visible')"></page-meta>
 	<view class="menu-page">
-		
 		<view class="bg-dark"></view>
 		<view class="main-info p-3 flex column justify-around">
 			<text class="main-info-logo">SAP Burger</text>
@@ -50,7 +49,7 @@
 
 		</view>
 		<!-- 商品选择弹窗 -->
-		<good-modal ref="goodModalRef" @change="get" :good="goodModalItem" ></good-modal>
+		<good-modal ref="goodModalRef" @change="get" :good="goodModalItem"></good-modal>
 		<!-- <cart></cart> -->
 	</view>
 </template>
@@ -69,8 +68,8 @@
 	const currentCategory = ref(0) //当前选中的类目
 	const goodModalRef = ref(null) //选择规格弹窗
 	const goodModalItem = ref(null) //选择规格弹窗
-	const scrollStop = ref(false)//控制滚动穿透
-	
+	const scrollStop = ref(false) //控制滚动穿透
+
 	onLoad(() => {
 		//获取数据
 		import('/api/categorys.json').then(res => {
@@ -82,13 +81,13 @@
 	}
 	const pickGood = (good) => {
 		goodModalItem.value = good
-	 	nextTick(()=>{
-		    goodModalRef.value?.open();
-	 })
+		nextTick(() => {
+			goodModalRef.value?.open();
+		})
 	}
-	const get=(visible)=>{
-		console.log('父级get',visible)
-		scrollStop.value=visible
+	const get = (visible) => {
+		console.log('父级get', visible)
+		scrollStop.value = visible
 	}
 </script>
 

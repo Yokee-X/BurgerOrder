@@ -33,7 +33,7 @@ const _sfc_main = {
       });
     };
     const get = (visible) => {
-      common_vendor.index.__f__("log", "at pages/menu/index.vue:90", "父级get", visible);
+      common_vendor.index.__f__("log", "at pages/menu/index.vue:89", "父级get", visible);
       scrollStop.value = visible;
     };
     return (_ctx, _cache) => {

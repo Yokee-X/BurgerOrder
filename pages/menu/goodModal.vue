@@ -1,8 +1,8 @@
 <template>
 	<uni-popup ref="popupRef" type="bottom" @change="modalChange">
-		<view class="container" >
+		<view class="container">
 			<view class="iconfont icon-close close p-1 radius-circle"></view>
-			<!-- <scroll-view class="flex column good items-center">
+			<view class="flex column good justify-start items-center">
 				<view class="good-img p-2">
 					<image :src="props.good?.image" mode="aspectFit" style="width: 100%"></image>
 				</view>
@@ -20,8 +20,8 @@
 							@add="(total)=>updateAddMap(ingredient,total)"></AddSubtractButton>
 					</view>
 				</view>
-			</scroll-view> -->
-			<!-- <view class="flex justify-between bottom-add p-1" v-show="addListTitleShow">
+			</view>
+			<view class="flex justify-between bottom-add p-1" v-show="addListTitleShow">
 				<text class="fs-sm">已选：{{addListTitle}}</text>
 			</view>
 			<view class="bottom flex justify-between column m-2">
@@ -36,20 +36,16 @@
 					<SButton @tap="buyNow" class="bottom-btn">立即购买</SButton>
 					<SButton @tap="addCart" class="bottom-btn" primary>加入购物车</SButton>
 				</view>
-			</view> -->
+			</view>
 
 		</view>
 	</uni-popup>
 </template>
 
 <script setup>
-	// import Popup1 from '../../components/Popup/Popup1.vue';
 	import {
 		computed,
-		nextTick,
 		onMounted,
-		onUnmounted,
-		onUpdated,
 		ref
 	} from 'vue';
 	import {
@@ -61,43 +57,57 @@
 	import {
 		storeToRefs
 	} from 'pinia'
-
 	const props = defineProps({
 		good: {
 			type: Object, //当前选择的商品
 			default: () => ({})
 		}
 	})
+	const popupRef = ref(null) //
 	const store = useCartStore() //购物车store
-		const {
-			cart
-		} = storeToRefs(store)
-		const {
-			updateCart
-		} = store
-	const popupRef = ref(null) //BUG:ref要在props后定义
-	const visible = ref(false) //
-
+	const {
+		cart
+	} = storeToRefs(store)
+	const {
+		updateCart
+	} = store
 	const ingredientList = ref([]) //小料列表数据
 	const ingredientMap = ref({}) //小料列表映射
 	const addMap = ref({}) //加料列表数据
 	const goodTotal = ref(1) //商品个数
-	// onLoad(() => {
-	// 	//获取数据
-	// 	import('/api/add.json').then(res => {
-	// 		ingredientList.value = res.default
-	// 		res.default.forEach((item) => {
-	// 			ingredientMap
-	// 				.value[item.id] = item
-	// 		})
-	// 	})
-	// })
-	onMounted(()=>{
-		console.log('mounted',visible.value,popupRef.value)
+	//暴露modal方法
+	const open = () => {
+		console.log('调用open', popupRef.value)
+		popupRef.value?.open()
+	};
+	defineExpose({
+		open
 	})
-	onUpdated(()=>{
-		console.log('update',visible.value,popupRef.value)
+	//modal change
+	const $emit = defineEmits(['change'])
+	const modalChange = ({
+		show
+	}) => {
+		addMap.value = {}
+		goodTotal.value = 1
+		$emit('change', show)
+	}
+	
+	onMounted(() => {
+		console.log(popupRef.value, 'popupRef.value')
 	})
+	
+	onLoad(() => {
+		//获取数据
+		import('/api/add.json').then(res => {
+			ingredientList.value = res.default
+			res.default.forEach((item) => {
+				ingredientMap
+					.value[item.id] = item
+			})
+		})
+	})
+	//加料是否展示
 	const addListTitleShow = computed(() => {
 		const show = Object.keys(addMap.value).length != 0 || Object.keys(addMap.value).some(id => addMap.value?.[
 			id
@@ -148,25 +158,6 @@
 	//更新商品个数
 	const updateGoodTotal = (total) => {
 		goodTotal.value = total
-	}
-	//暴露modal方法
-	const open = () => {
-		console.log('调用open', popupRef.value)
-		if(popupRef.value){
-			visible.value = true
-			popupRef.value?.open()
-		}
-	};
-	defineExpose({
-		open
-	})
-	//modal change
-	const $emit = defineEmits(['change'])
-	const modalChange = ({show}) => {
-		addMap.value = {}
-		goodTotal.value = 1
-		visible.value = show
-		$emit('change', show)
 	}
 </script>
 

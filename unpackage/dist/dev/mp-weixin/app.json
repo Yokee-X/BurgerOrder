@@ -42,6 +42,14 @@
       }
     ]
   },
+  "preloadRule": {
+    "pages/home/index": {
+      "network": "all",
+      "packages": [
+        "__APP__"
+      ]
+    }
+  },
   "lazyCodeLoading": "requiredComponents",
   "usingComponents": {}
 }
