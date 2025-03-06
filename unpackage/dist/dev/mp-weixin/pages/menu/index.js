@@ -6,9 +6,9 @@ if (!Array) {
 }
 const _easycom_SButton = () => "../../components/SButton/SButton.js";
 if (!Math) {
-  (_easycom_SButton + goodModal)();
+  (_easycom_SButton + popup)();
 }
-const goodModal = () => "./goodModal.js";
+const popup = () => "./popup.js";
 const _sfc_main = {
   __name: "index",
   setup(__props) {
@@ -33,7 +33,7 @@ const _sfc_main = {
       });
     };
     const get = (visible) => {
-      common_vendor.index.__f__("log", "at pages/menu/index.vue:89", "父级get", visible);
+      common_vendor.index.__f__("log", "at pages/menu/index.vue:91", "父级get", visible);
       scrollStop.value = visible;
     };
     return (_ctx, _cache) => {

@@ -45,7 +45,6 @@
 		if (total.value < props.maxNumber) {
 			total.value += 1
 		}
-		console.log('add',total.value)
 		$emit('add', total.value)
 	}
 </script>

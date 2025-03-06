@@ -46,30 +46,32 @@
 					</view>
 				</scroll-view>
 			</view>
-
+		
 		</view>
-		<!-- 商品选择弹窗 -->
-		<good-modal ref="goodModalRef" @change="get" :good="goodModalItem"></good-modal>
-		<!-- <cart></cart> -->
+		
+		<!-- <view v-for="(item,index) in 6" :key="index">
+		
+		<SButton @tap="pickGood({a:123})">选规格</SButton>
+	</view> -->
+		<popup ref="goodModalRef" @change="get" :good="goodModalItem"></popup>
 	</view>
 </template>
+
 <script setup>
 	import {
 		nextTick,
-		onUpdated,
-		ref,
+		ref
 	} from 'vue';
 	import {
 		onLoad
 	} from '@dcloudio/uni-app'
-	import goodModal from './goodModal.vue'
-	import cart from './cart.vue';
+	import popup from './popup.vue'
+	import cartVue from './cart.vue';
 	const category = ref([]) //商品类目
 	const currentCategory = ref(0) //当前选中的类目
-	const goodModalRef = ref(null) //选择规格弹窗
+	const goodModalRef = ref(null)
 	const goodModalItem = ref(null) //选择规格弹窗
 	const scrollStop = ref(false) //控制滚动穿透
-
 	onLoad(() => {
 		//获取数据
 		import('/api/categorys.json').then(res => {

@@ -1,4 +1,4 @@
-<template v-show="cart.length!=0">
+<template >
 	<view class="cart">
 		
 	</view>

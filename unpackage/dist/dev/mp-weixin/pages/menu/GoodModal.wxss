@@ -105,8 +105,6 @@
   color: #fff;
 }
 .good.data-v-7f868348 {
-  position: relative;
-  overflow-y: auto;
   padding-bottom: 160rpx;
 }
 .good-img.data-v-7f868348 {

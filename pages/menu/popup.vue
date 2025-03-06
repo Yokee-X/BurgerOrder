@@ -2,29 +2,32 @@
 	<uni-popup ref="popupRef" type="bottom" @change="modalChange">
 		<view class="container">
 			<view class="iconfont icon-close close p-1 radius-circle"></view>
-			<view class="flex column good items-center">
-				<view class="good-img p-2">
-					<image :src="props.good?.image" mode="aspectFit" style="width: 100%"></image>
-				</view>
-				<view class="good-main flex justify-between items-center">
-					<text class="good-label  fs-md">{{props.good?.label}}</text>
-					<text class="good-sell fs-sm">月售{{props.good?.sell}}</text>
-				</view>
-				<view class="add flex column">
-					<text class="add-title fs-sm">来点小料</text>
-					<view v-for="(ingredient,key) in ingredientList" :key="key"
-						class="add-item flex justify-between items-center">
-						<text class="add-item-label">{{ingredient.label}}</text>
-						<text class="add-item-price">￥{{ingredient.price}}</text>
-						<AddSubtractButton @reduce="(total)=>updateAddMap(ingredient,total)"
-							@add="(total)=>updateAddMap(ingredient,total)"></AddSubtractButton>
+			<scroll-view :scroll-y="true" class="scroll">
+				<view  class="flex column good items-center">
+					<view class="good-img p-2">
+						<image :src="props.good?.image" mode="aspectFit" style="width: 100%"></image>
+					</view>
+					<view class="good-main flex justify-between items-center">
+						<text class="good-label  fs-md">{{props.good?.label}}</text>
+						<text class="good-sell fs-sm">月售{{props.good?.sell}}</text>
+					</view>
+					<view class="add flex column">
+						<text class="add-title fs-sm">来点小料</text>
+						<view v-for="(ingredient,key) in ingredientList" :key="key"
+							class="add-item flex justify-between items-center">
+							<text class="add-item-label">{{ingredient.label}}</text>
+							<text class="add-item-price">￥{{ingredient.price}}</text>
+							<AddSubtractButton @reduce="(total)=>updateAddMap(ingredient,total)"
+								@add="(total)=>updateAddMap(ingredient,total)"></AddSubtractButton>
+						</view>
 					</view>
 				</view>
-			</view>
+				
+			</scroll-view>
 			<view class="flex justify-between bottom-add p-1" v-show="addListTitleShow">
 				<text class="fs-sm">已选：{{addListTitle}}</text>
 			</view>
-			<view class="bottom flex justify-between column m-2">
+			<view class="bottom flex justify-between column p-2">
 
 				<view class="flex justify-between bottom-total">
 					<text class="bottom-total-title fs-md">￥<text
@@ -177,14 +180,19 @@
 		top: 30rpx;
 		background: rgba(0, 0, 0, 0.1);
 		color: #fff;
-
+		&::after{
+			content: '';
+			clear: both;
+			visibility: hidden;
+			display: none;
+		}
 	}
-
+	.scroll{
+		height: calc(90vh - 160rpx);
+	}
 	.good {
-		position: relative;
-		overflow-y: auto;
-		padding-bottom: 160rpx;
-
+		// position: relative;
+		padding-bottom: 80rpx;
 		&-img {
 			// display: block;
 			width: 600rpx;
@@ -282,22 +290,23 @@
 
 	.bottom-add {
 		background: #eee;
-		position: fixed;
 		width: 100%;
+		position: fixed;
 		z-index: 10;
 		bottom: 160rpx;
 		box-sizing: border-box;
+		  flex-shrink: 0;
 	}
 
 	.bottom {
-		position: fixed;
 		width: 100%;
 		box-sizing: border-box;
+		position: fixed;
 		z-index: 10;
 		bottom: 0;
 		height: 160rpx;
 		background: #fff;
-
+  flex-shrink: 0;
 		&-total {
 			&-title {
 				color: $dark-gold;

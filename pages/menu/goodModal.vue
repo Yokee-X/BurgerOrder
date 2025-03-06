@@ -2,7 +2,7 @@
 	<uni-popup ref="popupRef" type="bottom" @change="modalChange">
 		<view class="container">
 			<view class="iconfont icon-close close p-1 radius-circle"></view>
-			<view class="flex column good justify-start items-center">
+			<scroll-view class="flex column good items-center">
 				<view class="good-img p-2">
 					<image :src="props.good?.image" mode="aspectFit" style="width: 100%"></image>
 				</view>
@@ -20,11 +20,11 @@
 							@add="(total)=>updateAddMap(ingredient,total)"></AddSubtractButton>
 					</view>
 				</view>
-			</view>
+			</scroll-view>
 			<view class="flex justify-between bottom-add p-1" v-show="addListTitleShow">
 				<text class="fs-sm">已选：{{addListTitle}}</text>
 			</view>
-			<view class="bottom flex justify-between column m-2">
+			<view class="bottom flex justify-between column p-2">
 
 				<view class="flex justify-between bottom-total">
 					<text class="bottom-total-title fs-md">￥<text
@@ -182,8 +182,8 @@
 	}
 
 	.good {
-		position: relative;
-		overflow-y: auto;
+		// position: relative;
+		// overflow-y: auto;
 		padding-bottom: 160rpx;
 
 		&-img {
