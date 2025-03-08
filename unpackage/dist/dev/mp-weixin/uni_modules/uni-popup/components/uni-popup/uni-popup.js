@@ -40,6 +40,10 @@ const _sfc_main = {
     },
     borderRadius: {
       type: String
+    },
+    customStyle: {
+      type: [String, Object],
+      default: ""
     }
   },
   watch: {
@@ -212,7 +216,7 @@ const _sfc_main = {
         direction = this.type;
       }
       if (!this.config[direction]) {
-        common_vendor.index.__f__("error", "at uni_modules/uni-popup/components/uni-popup/uni-popup.vue:298", "缺少类型：", direction);
+        common_vendor.index.__f__("error", "at uni_modules/uni-popup/components/uni-popup/uni-popup.vue:302", "缺少类型：", direction);
         return;
       }
       this[this.config[direction]]();
@@ -386,7 +390,8 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     j: common_vendor.o((...args) => $options.touchstart && $options.touchstart(...args)),
     k: common_vendor.n($data.popupstyle),
-    l: common_vendor.n($options.isDesktop ? "fixforpc-z-index" : "")
+    l: common_vendor.n($options.isDesktop ? "fixforpc-z-index" : ""),
+    m: common_vendor.s($props.customStyle)
   }) : {});
 }
 const Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render]]);

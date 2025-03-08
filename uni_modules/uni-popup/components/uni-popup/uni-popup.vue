@@ -1,5 +1,5 @@
 <template>
-	<view v-if="showPopup" class="uni-popup" :class="[popupstyle, isDesktop ? 'fixforpc-z-index' : '']">
+	<view v-if="showPopup" class="uni-popup" :class="[popupstyle, isDesktop ? 'fixforpc-z-index' : '']" :style="customStyle">
 		<view @touchstart="touchstart">
 			<uni-transition key="1" v-if="maskShow" name="mask" mode-class="fade" :styles="maskClass"
 				:duration="duration" :show="showTrans" @click="onTap" />
@@ -89,6 +89,10 @@
 			},
 			borderRadius:{
 				type: String,
+			},
+			customStyle:{
+				type:[String,Object],
+				default:"",
 			}
 		},
 

@@ -13,7 +13,7 @@
 
 <script setup>
 	import {
-		ref
+		ref, watch
 	} from 'vue';
 	const props = defineProps({
 		init:{
@@ -35,6 +35,10 @@
 	})
 	const total = ref(props.init)
 	const $emit = defineEmits(['add', 'reduce'])
+	watch(()=>props.init,(newVal)=>{
+		console.log('newV',newVal)
+		total.value=newVal
+	})
 	const subtract = () => {
 		if (total.value > props.minNumber) {
 			total.value -= 1
@@ -47,6 +51,10 @@
 		}
 		$emit('add', total.value)
 	}
+	const reset = ()=>total.value=props.init
+	defineExpose({
+		reset
+	})
 </script>
 
 <style scoped lang="scss">

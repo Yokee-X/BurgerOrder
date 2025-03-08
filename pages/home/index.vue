@@ -23,18 +23,11 @@
 		ref,
 		computed
 	} from 'vue'
-	import {
-		onLoad
-	} from '@dcloudio/uni-app'
-	// onLoad(()=>{
-	// 	uni.preloadPage({url: "/pages/menu/index"});
-	// })
+	
 	const jump=(p)=>{
-		// uni.switchTab({
-		// 	url:'/pages/menu/index?takeout='+p
-		// })
-		uni.navigateTo({
-			url:'/pages/menu/test'
+		// TODO tab跳转不可携带参数 修改为redux
+		uni.switchTab({
+			url:'/pages/menu/index?takeout='+p
 		})
 	}
 </script>

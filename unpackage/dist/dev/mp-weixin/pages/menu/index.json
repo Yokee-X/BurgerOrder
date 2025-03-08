@@ -1,6 +1,8 @@
 {
   "usingComponents": {
     "s-button": "../../components/SButton/SButton",
-    "popup": "./popup"
+    "uni-badge": "../../uni_modules/uni-badge/components/uni-badge/uni-badge",
+    "popup": "./popup",
+    "cart-vue": "./cart"
   }
 }

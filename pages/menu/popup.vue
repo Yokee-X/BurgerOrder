@@ -1,9 +1,9 @@
 <template>
-	<uni-popup ref="popupRef" type="bottom" @change="modalChange">
+	<uni-popup ref="popupRef" type="bottom" @change="modalChange" :safe-area="false">
 		<view class="container">
-			<view class="iconfont icon-close close p-1 radius-circle"></view>
+			<view class="iconfont icon-close close p-1 radius-circle" @tap="close"></view>
 			<scroll-view :scroll-y="true" class="scroll">
-				<view  class="flex column good items-center">
+				<view class="flex column good items-center">
 					<view class="good-img p-2">
 						<image :src="props.good?.image" mode="aspectFit" style="width: 100%"></image>
 					</view>
@@ -17,12 +17,12 @@
 							class="add-item flex justify-between items-center">
 							<text class="add-item-label">{{ingredient.label}}</text>
 							<text class="add-item-price">￥{{ingredient.price}}</text>
-							<AddSubtractButton @reduce="(total)=>updateAddMap(ingredient,total)"
-								@add="(total)=>updateAddMap(ingredient,total)"></AddSubtractButton>
+							<AddSubtractButton ref="ingredientBtn"  @reduce="(total)=>updateAddMap(ingredient,total)"
+								@add="(total)=>updateAddMap(ingredient,total)" ></AddSubtractButton>
 						</view>
 					</view>
 				</view>
-				
+
 			</scroll-view>
 			<view class="flex justify-between bottom-add p-1" v-show="addListTitleShow">
 				<text class="fs-sm">已选：{{addListTitle}}</text>
@@ -32,7 +32,7 @@
 				<view class="flex justify-between bottom-total">
 					<text class="bottom-total-title fs-md">￥<text
 							class="bottom-total-price fs-xl">{{totalPrice}}</text>/个</text>
-					<AddSubtractButton @reduce="updateGoodTotal" @add="updateGoodTotal" :init="1" :minNumber="1">
+					<AddSubtractButton ref="goodTotalBtn" @reduce="updateGoodTotal" @add="updateGoodTotal" :init="1" :minNumber="1">
 					</AddSubtractButton>
 				</view>
 				<view class="flex justify-between ">
@@ -49,7 +49,8 @@
 	import {
 		ref,
 		onMounted,
-		computed
+		computed,
+		onUpdated
 	} from 'vue';
 	import {
 		onLoad
@@ -67,6 +68,8 @@
 		},
 	})
 	const popupRef = ref(null)
+	const ingredientBtn = ref(null) //加料按钮Ref
+	const goodTotalBtn =ref(null)//总数量Ref
 	const store = useCartStore() //购物车store
 	const {
 		cart
@@ -80,25 +83,30 @@
 	const goodTotal = ref(1) //商品个数
 
 	const open = () => {
-		console.log('调用open', popupRef.value)
-		popupRef.value.open()
+		popupRef.value?.open()
+	}
+	const close = ()=>{
+		popupRef.value.close()
 	}
 	defineExpose({
 		open
 	})
-
+	
 	const $emit = defineEmits(['change'])
 	const modalChange = ({
 		show
 	}) => {
-		addMap.value = {}
-		goodTotal.value = 1
 		$emit('change', show)
+		if(!show){
+			addMap.value = {}
+			goodTotal.value = 1
+			ingredientBtn.value.forEach((item)=>item.reset())
+			goodTotalBtn.value.reset()
+		}
 	}
-	onMounted(() => {
-		console.log(popupRef.value, '1111111111111')
-	})
-
+onUpdated(()=>{
+	console.log('update',addMap.value,goodTotal.value)
+})
 	onLoad(() => {
 		//获取数据
 		import('/api/add.json').then(res => {
@@ -111,10 +119,9 @@
 	})
 	//加料是否展示
 	const addListTitleShow = computed(() => {
-		const show = Object.keys(addMap.value).length != 0 || Object.keys(addMap.value).some(id => addMap.value?.[
+		const show = Object.keys(addMap.value).length != 0 && Object.keys(addMap.value).some(id => addMap.value?.[
 			id
 		] !== 0)
-		console.log(Object.keys(addMap.value).length, 'show')
 		return show
 	})
 	//加料展示标题
@@ -125,15 +132,16 @@
 		})
 		return title.join('、')
 	})
-	//总价格
-	const totalPrice = computed(() => {
-		const ingredientPrice = Object.keys(addMap.value).reduce((pre, id) => {
+	//加料价格
+	const ingredientPrice = computed(()=>Object.keys(addMap.value).reduce((pre, id) => {
 			pre = pre + ingredientMap.value[id].price * addMap.value[id]
 			return pre
 		}, 0)
-		const goodPirce = goodTotal.value * (props.good?.price || 0)
-		return ingredientPrice + goodPirce
-	})
+	)
+	//总价格
+	const totalPrice = computed(() => goodTotal.value * (props.good?.price+ ingredientPrice.value)
+	)
+
 	//跳转购买页面
 	const buyNow = () => {}
 	//加入购物车
@@ -145,14 +153,25 @@
 				total: addMap.value[id]
 			})
 		})
+		//购物车item
 		const obj = {
 			...props.good,
-			ingredient
+			ingredient,
+			total:goodTotal.value,
+			simplePrice:props.good.price+ingredientPrice.value,
+			gid:['g'+props.good.id,...ingredient.sort((a,b)=>a.id-b.id).map(v=>'i'+v.id)].join('_')//生成购物车gid
 		}
-		updateCart((value) => [...value, obj])
-		popupRef.value?.close()
+		
+		updateCart((cartMap) =>{
+			if(cartMap.has(obj.gid)){
+				cartMap.set(obj.gid,{...obj,total:obj.total+cartMap.get(obj.gid).total})
+			}else{
+				cartMap.set(obj.gid,obj)
+			}
+			return cartMap
+		})
+		close()
 	}
-
 	//加减小料
 	const updateAddMap = (ingredient, total) => {
 		addMap.value[ingredient.id] = total
@@ -180,19 +199,23 @@
 		top: 30rpx;
 		background: rgba(0, 0, 0, 0.1);
 		color: #fff;
-		&::after{
+		z-index: 10;
+		&::after {
 			content: '';
 			clear: both;
 			visibility: hidden;
 			display: none;
 		}
 	}
-	.scroll{
+
+	.scroll {
 		height: calc(90vh - 160rpx);
 	}
+
 	.good {
 		// position: relative;
-		padding-bottom: 80rpx;
+		padding-bottom: 50rpx;
+
 		&-img {
 			// display: block;
 			width: 600rpx;
@@ -295,7 +318,6 @@
 		z-index: 10;
 		bottom: 160rpx;
 		box-sizing: border-box;
-		  flex-shrink: 0;
 	}
 
 	.bottom {
@@ -306,7 +328,7 @@
 		bottom: 0;
 		height: 160rpx;
 		background: #fff;
-  flex-shrink: 0;
+
 		&-total {
 			&-title {
 				color: $dark-gold;

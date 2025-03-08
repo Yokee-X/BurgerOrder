@@ -13,15 +13,15 @@ const _sfc_main = {
   __name: "index",
   setup(__props) {
     const jump = (p) => {
-      common_vendor.index.navigateTo({
-        url: "/pages/menu/test"
+      common_vendor.index.switchTab({
+        url: "/pages/menu/index?takeout=" + p
       });
     };
     return (_ctx, _cache) => {
       return {
         a: common_assets._imports_0,
-        b: common_vendor.o(($event) => jump()),
-        c: common_vendor.o(($event) => jump())
+        b: common_vendor.o(($event) => jump(0)),
+        c: common_vendor.o(($event) => jump(1))
       };
     };
   }

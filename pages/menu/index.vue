@@ -38,7 +38,9 @@
 										<text class="good-pirce fs-sm"><text class="fs-sm"
 												style="font-weight: 600;">￥<text
 													class="fs-md">{{good.price}}</text></text>/份</text>
+													<uni-badge :text="cartMap[good.id]" type="error" absolute="rightTop">
 										<SButton @tap="pickGood(good)">选规格</SButton>
+										</uni-badge>
 									</view>
 								</view>
 							</view>
@@ -46,32 +48,50 @@
 					</view>
 				</scroll-view>
 			</view>
-		
 		</view>
-		
-		<!-- <view v-for="(item,index) in 6" :key="index">
-		
-		<SButton @tap="pickGood({a:123})">选规格</SButton>
-	</view> -->
-		<popup ref="goodModalRef" @change="get" :good="goodModalItem"></popup>
+		<!-- 选规格 -->
+		<popup ref="goodModalRef" @change="stopScroll" :good="goodModalItem"></popup>
+		<cart-vue @change="stopScroll"></cart-vue>
 	</view>
 </template>
 
 <script setup>
 	import {
 		nextTick,
-		ref
+		ref,
+		watch
 	} from 'vue';
 	import {
 		onLoad
 	} from '@dcloudio/uni-app'
 	import popup from './popup.vue'
 	import cartVue from './cart.vue';
+	import {
+		useCartStore
+	} from '/stores/cart';
+	import {
+		storeToRefs
+	} from 'pinia'
+	const store = useCartStore() //购物车store
+	const {
+		cart
+	} = storeToRefs(store)
 	const category = ref([]) //商品类目
 	const currentCategory = ref(0) //当前选中的类目
 	const goodModalRef = ref(null)
 	const goodModalItem = ref(null) //选择规格弹窗
 	const scrollStop = ref(false) //控制滚动穿透
+	const cartMap = ref({})//购物车选购映射
+	watch(cart.value,(newVal)=>{
+		cartMap.value = {};
+		[...cart.value.values()].forEach(item=>{
+			if(cartMap.value[item.id]){
+				cartMap.value[item.id] +=item.total
+			}else{
+				cartMap.value[item.id] =item.total
+			}
+		})
+	})
 	onLoad(() => {
 		//获取数据
 		import('/api/categorys.json').then(res => {
@@ -87,8 +107,8 @@
 			goodModalRef.value?.open();
 		})
 	}
-	const get = (visible) => {
-		console.log('父级get', visible)
+	//wx需要阻止滚动穿透
+	const stopScroll = (visible) => {
 		scrollStop.value = visible
 	}
 </script>

@@ -1,9 +1,13 @@
 <template>
-	<view class="">订单页面</view>
+	<view class="">
+		
+		
+	</view>
+	
 </template>
 
-<script>
+<script setup>
 </script>
 
-<style>
+<style lang="scss" scoped> 
 </style>
